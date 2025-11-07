@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import './App.css'
 
 const images = [
@@ -37,23 +37,6 @@ function App() {
   const next = () => setCurrent(i => (i + 1) % total);
   const goTo = (index) => setCurrent(index);
 
-  useEffect(() => {
-      const onKey = (e) => {
-          if (e.key === 'ArrowLeft') prev();
-          if (e.key === 'ArrowRight') next();
-      };
-      window.addEventListener('keydown', onKey);
-      return () => window.removeEventListener('keydown', onKey);
-  }, [total]);
-
-  if (total === 0) {
-    return (
-      <div className="empty-state">
-        <p>No images to display</p>
-      </div>
-    )
-  }
-
   const { src, alt } = images[current]
 
   return (
@@ -75,7 +58,6 @@ function App() {
               <button
                   key={image.src + i}
                   onClick={() => goTo(i)}
-                  aria-label={`Go to image ${i + 1}: ${image.alt}`}
                   aria-current={i === current}
                   className={`dot${i === current ? " active" : ""}`}
               />
